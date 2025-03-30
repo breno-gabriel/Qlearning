@@ -19,15 +19,15 @@ def convert_action_number(action : int) -> str:
 
     if (action == 0): 
 
-        return 'left'
+        return "left"
     
     elif (action == 1): 
 
-        return 'right'
+        return "right"
     
     elif (action == 2): 
 
-        return 'jump'
+        return "jump"
     
 def better_action(state : int) -> str:
 
@@ -47,7 +47,7 @@ episilon = 0 # Isso faz parte do epsilon greedy strategy.
 
 while (True): 
 
-    print('executando codigo')
+    print('=========================== Executando projeto ==============================================================')
 
     # epsilon greedy strategy (o agente decidirá se irá explorar o ambiente ou buscar por uma estratégia já conhecida)
     random_number = random.random()
@@ -61,12 +61,12 @@ while (True):
 
         #Aqui o agente busca pela estratégia que ele já conhece. 
 
-        action = better_action(curr_state)
+        action = convert_action_number(better_action(curr_state))
 
     print(action)
 
     state, reward = cn.get_state_reward(s, action)
 
-    print(state)
+    print(reward)
 
     np.savetxt('resultado.txt', q_table, fmt="%f")  
