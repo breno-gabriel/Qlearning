@@ -47,7 +47,7 @@ episilon = 0 # Isso faz parte do epsilon greedy strategy.
 
 while (True): 
 
-    print('=========================== Executando projeto ==============================================================')
+    print('=========================== Runnig the project ==============================================================')
 
     # epsilon greedy strategy (o agente decidirá se irá explorar o ambiente ou buscar por uma estratégia já conhecida)
     random_number = random.random()
