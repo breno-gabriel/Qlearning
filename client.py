@@ -54,15 +54,14 @@ def update(oldState, action, newState, reward):
 
         action = 2
     
-    sPrime = int(newState,2)
-    bellman = bellman_equation(reward, sPrime, gamma)
+    bellman = bellman_equation(reward, newState, gamma)
     q_table[oldState, action] += alfa * (bellman - q_table[oldState, action])
 curr_state = 0
 curr_reward = -14
 
 alfa = 0.2 # Taxa aprendizado (no nosso caso, o agente aprende de forma lenta, porém estável). 
-gamma = 0.7 # Peso das recompensas futuras (no nosso caso, o agente planeja a longo prazo e considera recompensas futuras mais importantes)
-episilon = 0.3 # Isso faz parte do epsilon greedy strategy.     
+gamma = 0.5 # Peso das recompensas futuras (no nosso caso, o agente planeja a longo prazo e considera recompensas futuras mais importantes)
+episilon = 1 # Isso faz parte do epsilon greedy strategy.     
 
 while (True): 
 
@@ -87,9 +86,16 @@ while (True):
 
     state, reward = cn.get_state_reward(s, action)
 
+    if action == "jump" and reward == -100:
+        reward = -20
+    elif action == "jump":
+        reward = -5
     print(reward)
     
-    update(curr_state, action, state, reward)
-    curr_state = int(state, 2)
+    # Encontrando linha da q_table referente ao NewState
+    newState = (int(state[2:7],2) * 4) + (int(state[7:9], 2) % 4)
+    
+    update(curr_state, action, newState, reward)
+    curr_state = newState
 
     np.savetxt('resultado.txt', q_table, fmt="%f")  
