@@ -8,6 +8,14 @@ s = cn.connect(2037)
 # usamos a biblioteca numpy para ler o 'resultado.txt' como uma matriz
 q_table = np.loadtxt('resultado.txt')
 
+def reset_table():
+    
+    with open("resultado.txt", "w") as file:
+        text = ""
+        for n in range(96):
+            text = f"{text}0.000000 0.000000 0.000000\n"
+            
+        file.write(text)
 # Funções uteis. 
 def bellman_equation( r, s_prime, gamma):
     
@@ -59,9 +67,11 @@ def update(oldState, action, newState, reward):
 curr_state = 0
 curr_reward = -14
 
-alfa = 0.2 # Taxa aprendizado (no nosso caso, o agente aprende de forma lenta, porém estável). 
-gamma = 0.5 # Peso das recompensas futuras (no nosso caso, o agente planeja a longo prazo e considera recompensas futuras mais importantes)
+alfa = 0.1 # Taxa aprendizado (no nosso caso, o agente aprende de forma lenta, porém estável). 
+gamma = 0.8 # Peso das recompensas futuras (no nosso caso, o agente planeja a longo prazo e considera recompensas futuras mais importantes)
 episilon = 1 # Isso faz parte do epsilon greedy strategy.     
+
+reset_table()
 
 while (True): 
 
