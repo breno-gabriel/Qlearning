@@ -67,7 +67,7 @@ def update(oldState, action, newState, reward):
 curr_state = 0
 curr_reward = -14
 
-alfa = 0.1 # Taxa aprendizado (no nosso caso, o agente aprende de forma lenta, porém estável). 
+alfa = 0.25 # Taxa aprendizado (no nosso caso, o agente aprende de forma lenta, porém estável). 
 gamma = 0.8 # Peso das recompensas futuras (no nosso caso, o agente planeja a longo prazo e considera recompensas futuras mais importantes)
 episilon = 1 # Isso faz parte do epsilon greedy strategy.     
 
@@ -78,28 +78,39 @@ while (True):
     print('=========================== Runnig the project ==============================================================')
 
     # epsilon greedy strategy (o agente decidirá se irá explorar o ambiente ou buscar por uma estratégia já conhecida)
-    random_number = random.random()
-    if random_number < episilon: 
+    random_float = random.uniform(0,1) 
+    if random_float < episilon: 
 
         # Aqui o agente busca explorar o ambiente. 
 
         action = convert_action_number(random.randint(0, 2))
+        print("Escolha aleatoria")
 
     else: 
 
         #Aqui o agente busca pela estratégia que ele já conhece. 
 
         action = convert_action_number(better_action(curr_state))
+        print("Escolha consciente")
 
-    episilon = max(episilon * 0.995, 0.01)
+    # Diminuir a exploração aos poucos. 
+    episilon = max(episilon * 0.998, 0.4)
     print(action)
 
     state, reward = cn.get_state_reward(s, action)
 
-    if action == "jump" and reward == -100:
-        reward = -20
-    elif action == "jump":
-        reward = -5
+    if reward < -100:
+
+        alfa = 0.05
+    
+    else: 
+
+        alfa = 0.25 
+
+    # if action == "jump" and reward == -100:
+    #     reward = -20
+    # elif action == "jump":
+    #     reward = -5
     print(reward)
     
     # Encontrando linha da q_table referente ao NewState
