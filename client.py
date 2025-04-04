@@ -59,9 +59,9 @@ def update(oldState, action, newState, reward):
 curr_state = 0
 curr_reward = -14
 
-alfa = 0.2 # Taxa aprendizado (no nosso caso, o agente aprende de forma lenta, porém estável). 
-gamma = 0.5 # Peso das recompensas futuras (no nosso caso, o agente planeja a longo prazo e considera recompensas futuras mais importantes)
-episilon = 1 # Isso faz parte do epsilon greedy strategy.     
+alfa = 0.1 # Taxa aprendizado (no nosso caso, o agente aprende de forma lenta, porém estável). 
+gamma = 0.95 # Peso das recompensas futuras (no nosso caso, o agente planeja a longo prazo e considera recompensas futuras mais importantes)
+episilon = 0.1 # Isso faz parte do epsilon greedy strategy.     
 
 while (True): 
 
@@ -81,15 +81,11 @@ while (True):
 
         action = convert_action_number(better_action(curr_state))
 
-    episilon = max(episilon * 0.995, 0.01)
+    
     print(action)
 
     state, reward = cn.get_state_reward(s, action)
 
-    if action == "jump" and reward == -100:
-        reward = -20
-    elif action == "jump":
-        reward = -5
     print(reward)
     
     # Encontrando linha da q_table referente ao NewState
