@@ -59,9 +59,9 @@ def update(oldState, action, newState, reward):
 curr_state = 0
 curr_reward = -14
 
-alfa = 0.1 # Taxa aprendizado (no nosso caso, o agente aprende de forma lenta, porém estável). 
+alfa = 0.01 # Taxa aprendizado (no nosso caso, o agente aprende de forma lenta, porém estável). 
 gamma = 0.95 # Peso das recompensas futuras (no nosso caso, o agente planeja a longo prazo e considera recompensas futuras mais importantes)
-episilon = 0.1 # Isso faz parte do epsilon greedy strategy.     
+episilon = 0.01 # Isso faz parte do epsilon greedy strategy.     
 
 while (True): 
 
