@@ -32,12 +32,6 @@ def convert_action_number(action : int) -> str:
 def better_action(state : int) -> str:
     
     return np.argmax(q_table[state])
-    # if q_table[state, 0] > q_table[state, 1] and q_table[state, 0] > q_table[state, 2]:
-    #     return 0
-    # elif q_table[state, 1] > q_table[state, 0] and q_table[state, 1] > q_table[state, 2]:
-    #     return 1
-    # else:
-    #     return 2
  
 # Atualizando a q_table    
 def update(oldState, action, newState, reward):
@@ -54,14 +48,14 @@ def update(oldState, action, newState, reward):
 
         action = 2
     
-    bellman = bellman_equation(reward, newState, gamma)
-    q_table[oldState, action] += alfa * (bellman - q_table[oldState, action])
+    value = bellman_equation(reward, newState, gamma)
+    q_table[oldState, action] += alfa * (value - q_table[oldState, action])
+    
 curr_state = 0
-curr_reward = -14
 
-alfa = 0.01 # Taxa aprendizado (no nosso caso, o agente aprende de forma lenta, porém estável). 
-gamma = 0.95 # Peso das recompensas futuras (no nosso caso, o agente planeja a longo prazo e considera recompensas futuras mais importantes)
-episilon = 0.01 # Isso faz parte do epsilon greedy strategy.     
+alfa = 0.01 # Taxa de aprendizado, atualmente em 0.01 para evitar que sobrescrições bruscas sejam feitas na q_table durante a demonstração 
+gamma = 0.95 # Peso das recompensas futuras, fator de desconto na equação
+episilon = 0.01 # Isso faz parte do epsilon greedy strategy. Atualmente em 0.01 para evitar ações aleatórias     
 
 while (True): 
 
